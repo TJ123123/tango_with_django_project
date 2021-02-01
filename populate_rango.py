@@ -21,12 +21,12 @@ def populate():
         {'title':'Bottle', 'url':'http://bottlepy.org/docs/dev/'},
         {'title':'Flask','url':'http://flask.pocoo.org'} ]
 
-    cats = {'Python': {'pages': python_pages}, 
-            'Django': {'pages': django_pages},
-            'Other Frameworks': {'pages': other_pages} }
+    cats = {'Python': {'pages': python_pages, 'veiws': 128, 'likes': 64}, 
+            'Django': {'pages': django_pages, 'veiws': 64, 'likes': 32}},
+            'Other Frameworks': {'pages': other_pages, 'veiws': 32, 'likes': 16}}}
 
     for cat, cat_data in cats.items():
-        c = add_cat(cat)
+        c = add_cat(cat, cat_data['veiws'], cat_data['likes'])
         for p in cat_data['pages']:
             add_page(c, p['title'], p['url'])
 
@@ -41,19 +41,12 @@ def add_page(cat, title, url, views=0):
     p.save()
     return p
 
-def add_cat(name):
+def add_cat(name, views, likes):
     c = Category.objects.get_or_create(name=name)[0]
+    c.views, c.likes = 0
     c.save()
     return c
 
 if __name__ == '__main__':
     print('Starting Rango population script...')
     populate()
-
-
-
-
-
-
-
-
