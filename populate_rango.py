@@ -21,29 +21,37 @@ def populate():
         {'title':'Bottle', 'url':'http://bottlepy.org/docs/dev/'},
         {'title':'Flask','url':'http://flask.pocoo.org'} ]
 
-    cats = {'Python': {'pages': python_pages, 'veiws': 128, 'likes': 64}, 
-            'Django': {'pages': django_pages, 'veiws': 64, 'likes': 32}},
-            'Other Frameworks': {'pages': other_pages, 'veiws': 32, 'likes': 16}}}
+    cats = {'Python': {'pages': python_pages, 'views': 128, 'likes': 64}, 
+            'Django': {'pages': django_pages, 'views': 64, 'likes': 32},
+            'Other Frameworks': {'pages': other_pages, 'views': 32, 'likes': 16}}
 
     for cat, cat_data in cats.items():
-        c = add_cat(cat, cat_data['veiws'], cat_data['likes'])
+        c = add_cat(cat, cat_data['views'], cat_data['likes'])
         for p in cat_data['pages']:
-            add_page(c, p['title'], p['url'])
+            add_page(c, p['title'], p['url'], cat_data['views'])
 
     for c in Category.objects.all():
         for p in Page.objects.filter(category=c):
             print(f'- {c}: {p}')
 
-def add_page(cat, title, url, views=0):
+#things changed to be undone if needed
+'''
+views here used to b views = 0, now just views
+the call statment in line 31, 'p[views]' was added
+also spelling of views was corrected from 'veiws' in a bunch of places
+'''
+
+def add_page(cat, title, url, views):
     p = Page.objects.get_or_create(category=cat, title=title)[0]
-    p.url=url
-    p.views=views
+    p.url = url
+    p.views = views
     p.save()
     return p
 
 def add_cat(name, views, likes):
     c = Category.objects.get_or_create(name=name)[0]
-    c.views, c.likes = 0
+    c.views = 0
+    c.likes = 0
     c.save()
     return c
 
