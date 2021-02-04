@@ -6,13 +6,17 @@
 	</head>
 
 	<body>
+
+		<div>
+		 	<a href="/rango/">Home</a><br />
+		</div>
 		<div>
 		{% if category %}
 			<h1>{{ category.name }}</h1>
 			{% if pages %}
 			<ul>
 				{% for page in pages %}
-				<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+				<li><a href="{{ page.url }}">{{ 				page.title }}</a></li>
 				{% endfor %}
 			</ul>
 			{% else %}
