@@ -140,3 +140,6 @@ PASSWORD_HASHERS = [
 ]
 
 LOGIN_URL = 'rango:login'
+
+# chapter 10
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
